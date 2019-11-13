@@ -1,0 +1,559 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="bucynModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="bahan">
+          <Key>
+            <PropertyRef Name="id_bahan" />
+          </Key>
+          <Property Name="id_bahan" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nama_bahan" Type="varchar" MaxLength="50" />
+          <Property Name="harga_bahan" Type="int" />
+          <Property Name="stock_bahan" Type="int" />
+        </EntityType>
+        <EntityType Name="bahan_nasi">
+          <Key>
+            <PropertyRef Name="id_bahan_nasi" />
+          </Key>
+          <Property Name="id_bahan_nasi" Type="int" Nullable="false" />
+          <Property Name="id_penggunaan" Type="int" Nullable="false" />
+          <Property Name="id_nasi" Type="int" Nullable="false" />
+          <Property Name="jumlah_nasi" Type="int" />
+          <Property Name="laba_rugi" Type="int" />
+        </EntityType>
+        <EntityType Name="detail_penggunaan">
+          <Key>
+            <PropertyRef Name="id_detail" />
+          </Key>
+          <Property Name="id_detail" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_penggunaan" Type="int" Nullable="false" />
+          <Property Name="id_bahan" Type="int" Nullable="false" />
+          <Property Name="jumlah_bahan" Type="int" />
+          <Property Name="total_bahan" Type="int" />
+        </EntityType>
+        <EntityType Name="detail_penjualan">
+          <Key>
+            <PropertyRef Name="id_detail_pembelian" />
+          </Key>
+          <Property Name="id_detail_pembelian" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_penjualan" Type="int" Nullable="false" />
+          <Property Name="id_nasi" Type="int" Nullable="false" />
+          <Property Name="jumlah_nasi" Type="int" />
+          <Property Name="total" Type="int" />
+        </EntityType>
+        <EntityType Name="nasi">
+          <Key>
+            <PropertyRef Name="id_nasi" />
+          </Key>
+          <Property Name="id_nasi" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nama_nasi" Type="varchar" MaxLength="50" />
+          <Property Name="harga_nasi" Type="int" />
+          <Property Name="stock_nasi" Type="int" />
+        </EntityType>
+        <EntityType Name="pembelian_bahan">
+          <Key>
+            <PropertyRef Name="id_pembelian_bahan" />
+          </Key>
+          <Property Name="id_pembelian_bahan" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_bahan" Type="int" Nullable="false" />
+          <Property Name="tanggal" Type="varchar" MaxLength="50" />
+          <Property Name="jumlah_bahan" Type="int" />
+        </EntityType>
+        <EntityType Name="penggunaan">
+          <Key>
+            <PropertyRef Name="id_penggunaan" />
+          </Key>
+          <Property Name="id_penggunaan" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tanggal" Type="varchar" MaxLength="50" />
+          <Property Name="total_penggunaan" Type="int" />
+        </EntityType>
+        <EntityType Name="penjualan">
+          <Key>
+            <PropertyRef Name="id_penjualan" />
+          </Key>
+          <Property Name="id_penjualan" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tanggal" Type="varchar" MaxLength="50" />
+          <Property Name="total_penjualan" Type="int" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK_bahan_nasi_detail_penggunaan">
+          <End Role="penggunaan" Type="Self.penggunaan" Multiplicity="1" />
+          <End Role="bahan_nasi" Type="Self.bahan_nasi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="penggunaan">
+              <PropertyRef Name="id_penggunaan" />
+            </Principal>
+            <Dependent Role="bahan_nasi">
+              <PropertyRef Name="id_penggunaan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_bahan_nasi_nasi">
+          <End Role="nasi" Type="Self.nasi" Multiplicity="1" />
+          <End Role="bahan_nasi" Type="Self.bahan_nasi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="nasi">
+              <PropertyRef Name="id_nasi" />
+            </Principal>
+            <Dependent Role="bahan_nasi">
+              <PropertyRef Name="id_nasi" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_bahan_nasi_penggunaan">
+          <End Role="penggunaan" Type="Self.penggunaan" Multiplicity="1" />
+          <End Role="detail_penggunaan" Type="Self.detail_penggunaan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="penggunaan">
+              <PropertyRef Name="id_penggunaan" />
+            </Principal>
+            <Dependent Role="detail_penggunaan">
+              <PropertyRef Name="id_penggunaan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_bahan_nasi_penggunaan1">
+          <End Role="bahan" Type="Self.bahan" Multiplicity="1" />
+          <End Role="detail_penggunaan" Type="Self.detail_penggunaan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bahan">
+              <PropertyRef Name="id_bahan" />
+            </Principal>
+            <Dependent Role="detail_penggunaan">
+              <PropertyRef Name="id_bahan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_detail_penjualan_nasi">
+          <End Role="nasi" Type="Self.nasi" Multiplicity="1" />
+          <End Role="detail_penjualan" Type="Self.detail_penjualan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="nasi">
+              <PropertyRef Name="id_nasi" />
+            </Principal>
+            <Dependent Role="detail_penjualan">
+              <PropertyRef Name="id_nasi" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_detail_penjualan_penjualan">
+          <End Role="penjualan" Type="Self.penjualan" Multiplicity="1" />
+          <End Role="detail_penjualan" Type="Self.detail_penjualan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="penjualan">
+              <PropertyRef Name="id_penjualan" />
+            </Principal>
+            <Dependent Role="detail_penjualan">
+              <PropertyRef Name="id_penjualan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pembelian_bahan_bahan">
+          <End Role="bahan" Type="Self.bahan" Multiplicity="1" />
+          <End Role="pembelian_bahan" Type="Self.pembelian_bahan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bahan">
+              <PropertyRef Name="id_bahan" />
+            </Principal>
+            <Dependent Role="pembelian_bahan">
+              <PropertyRef Name="id_bahan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="bucynModelStoreContainer">
+          <EntitySet Name="bahan" EntityType="Self.bahan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="bahan_nasi" EntityType="Self.bahan_nasi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="detail_penggunaan" EntityType="Self.detail_penggunaan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="detail_penjualan" EntityType="Self.detail_penjualan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="nasi" EntityType="Self.nasi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="pembelian_bahan" EntityType="Self.pembelian_bahan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="penggunaan" EntityType="Self.penggunaan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="penjualan" EntityType="Self.penjualan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_bahan_nasi_detail_penggunaan" Association="Self.FK_bahan_nasi_detail_penggunaan">
+            <End Role="penggunaan" EntitySet="penggunaan" />
+            <End Role="bahan_nasi" EntitySet="bahan_nasi" />
+          </AssociationSet>
+          <AssociationSet Name="FK_bahan_nasi_nasi" Association="Self.FK_bahan_nasi_nasi">
+            <End Role="nasi" EntitySet="nasi" />
+            <End Role="bahan_nasi" EntitySet="bahan_nasi" />
+          </AssociationSet>
+          <AssociationSet Name="FK_bahan_nasi_penggunaan" Association="Self.FK_bahan_nasi_penggunaan">
+            <End Role="penggunaan" EntitySet="penggunaan" />
+            <End Role="detail_penggunaan" EntitySet="detail_penggunaan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_bahan_nasi_penggunaan1" Association="Self.FK_bahan_nasi_penggunaan1">
+            <End Role="bahan" EntitySet="bahan" />
+            <End Role="detail_penggunaan" EntitySet="detail_penggunaan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_detail_penjualan_nasi" Association="Self.FK_detail_penjualan_nasi">
+            <End Role="nasi" EntitySet="nasi" />
+            <End Role="detail_penjualan" EntitySet="detail_penjualan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_detail_penjualan_penjualan" Association="Self.FK_detail_penjualan_penjualan">
+            <End Role="penjualan" EntitySet="penjualan" />
+            <End Role="detail_penjualan" EntitySet="detail_penjualan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pembelian_bahan_bahan" Association="Self.FK_pembelian_bahan_bahan">
+            <End Role="bahan" EntitySet="bahan" />
+            <End Role="pembelian_bahan" EntitySet="pembelian_bahan" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="bucynModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="bucynEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="bahans" EntityType="bucynModel.bahan" />
+          <EntitySet Name="bahan_nasi" EntityType="bucynModel.bahan_nasi" />
+          <EntitySet Name="detail_penggunaan" EntityType="bucynModel.detail_penggunaan" />
+          <EntitySet Name="detail_penjualan" EntityType="bucynModel.detail_penjualan" />
+          <EntitySet Name="nasis" EntityType="bucynModel.nasi" />
+          <EntitySet Name="pembelian_bahan" EntityType="bucynModel.pembelian_bahan" />
+          <EntitySet Name="penggunaans" EntityType="bucynModel.penggunaan" />
+          <EntitySet Name="penjualans" EntityType="bucynModel.penjualan" />
+          <EntitySet Name="sysdiagrams" EntityType="bucynModel.sysdiagram" />
+          <AssociationSet Name="FK_bahan_nasi_penggunaan1" Association="bucynModel.FK_bahan_nasi_penggunaan1">
+            <End Role="bahan" EntitySet="bahans" />
+            <End Role="detail_penggunaan" EntitySet="detail_penggunaan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pembelian_bahan_bahan" Association="bucynModel.FK_pembelian_bahan_bahan">
+            <End Role="bahan" EntitySet="bahans" />
+            <End Role="pembelian_bahan" EntitySet="pembelian_bahan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_bahan_nasi_detail_penggunaan" Association="bucynModel.FK_bahan_nasi_detail_penggunaan">
+            <End Role="penggunaan" EntitySet="penggunaans" />
+            <End Role="bahan_nasi" EntitySet="bahan_nasi" />
+          </AssociationSet>
+          <AssociationSet Name="FK_bahan_nasi_nasi" Association="bucynModel.FK_bahan_nasi_nasi">
+            <End Role="nasi" EntitySet="nasis" />
+            <End Role="bahan_nasi" EntitySet="bahan_nasi" />
+          </AssociationSet>
+          <AssociationSet Name="FK_bahan_nasi_penggunaan" Association="bucynModel.FK_bahan_nasi_penggunaan">
+            <End Role="penggunaan" EntitySet="penggunaans" />
+            <End Role="detail_penggunaan" EntitySet="detail_penggunaan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_detail_penjualan_nasi" Association="bucynModel.FK_detail_penjualan_nasi">
+            <End Role="nasi" EntitySet="nasis" />
+            <End Role="detail_penjualan" EntitySet="detail_penjualan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_detail_penjualan_penjualan" Association="bucynModel.FK_detail_penjualan_penjualan">
+            <End Role="penjualan" EntitySet="penjualans" />
+            <End Role="detail_penjualan" EntitySet="detail_penjualan" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="bahan">
+          <Key>
+            <PropertyRef Name="id_bahan" />
+          </Key>
+          <Property Name="id_bahan" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nama_bahan" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="harga_bahan" Type="Int32" />
+          <Property Name="stock_bahan" Type="Int32" />
+          <NavigationProperty Name="detail_penggunaan" Relationship="bucynModel.FK_bahan_nasi_penggunaan1" FromRole="bahan" ToRole="detail_penggunaan" />
+          <NavigationProperty Name="pembelian_bahan" Relationship="bucynModel.FK_pembelian_bahan_bahan" FromRole="bahan" ToRole="pembelian_bahan" />
+        </EntityType>
+        <EntityType Name="bahan_nasi">
+          <Key>
+            <PropertyRef Name="id_bahan_nasi" />
+          </Key>
+          <Property Name="id_bahan_nasi" Type="Int32" Nullable="false" />
+          <Property Name="id_penggunaan" Type="Int32" Nullable="false" />
+          <Property Name="id_nasi" Type="Int32" Nullable="false" />
+          <Property Name="jumlah_nasi" Type="Int32" />
+          <Property Name="laba_rugi" Type="Int32" />
+          <NavigationProperty Name="penggunaan" Relationship="bucynModel.FK_bahan_nasi_detail_penggunaan" FromRole="bahan_nasi" ToRole="penggunaan" />
+          <NavigationProperty Name="nasi" Relationship="bucynModel.FK_bahan_nasi_nasi" FromRole="bahan_nasi" ToRole="nasi" />
+        </EntityType>
+        <EntityType Name="detail_penggunaan">
+          <Key>
+            <PropertyRef Name="id_detail" />
+          </Key>
+          <Property Name="id_detail" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_penggunaan" Type="Int32" Nullable="false" />
+          <Property Name="id_bahan" Type="Int32" Nullable="false" />
+          <Property Name="jumlah_bahan" Type="Int32" />
+          <Property Name="total_bahan" Type="Int32" />
+          <NavigationProperty Name="bahan" Relationship="bucynModel.FK_bahan_nasi_penggunaan1" FromRole="detail_penggunaan" ToRole="bahan" />
+          <NavigationProperty Name="penggunaan" Relationship="bucynModel.FK_bahan_nasi_penggunaan" FromRole="detail_penggunaan" ToRole="penggunaan" />
+        </EntityType>
+        <EntityType Name="detail_penjualan">
+          <Key>
+            <PropertyRef Name="id_detail_pembelian" />
+          </Key>
+          <Property Name="id_detail_pembelian" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_penjualan" Type="Int32" Nullable="false" />
+          <Property Name="id_nasi" Type="Int32" Nullable="false" />
+          <Property Name="jumlah_nasi" Type="Int32" />
+          <Property Name="total" Type="Int32" />
+          <NavigationProperty Name="nasi" Relationship="bucynModel.FK_detail_penjualan_nasi" FromRole="detail_penjualan" ToRole="nasi" />
+          <NavigationProperty Name="penjualan" Relationship="bucynModel.FK_detail_penjualan_penjualan" FromRole="detail_penjualan" ToRole="penjualan" />
+        </EntityType>
+        <EntityType Name="nasi">
+          <Key>
+            <PropertyRef Name="id_nasi" />
+          </Key>
+          <Property Name="id_nasi" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nama_nasi" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="harga_nasi" Type="Int32" />
+          <Property Name="stock_nasi" Type="Int32" />
+          <NavigationProperty Name="bahan_nasi" Relationship="bucynModel.FK_bahan_nasi_nasi" FromRole="nasi" ToRole="bahan_nasi" />
+          <NavigationProperty Name="detail_penjualan" Relationship="bucynModel.FK_detail_penjualan_nasi" FromRole="nasi" ToRole="detail_penjualan" />
+        </EntityType>
+        <EntityType Name="pembelian_bahan">
+          <Key>
+            <PropertyRef Name="id_pembelian_bahan" />
+          </Key>
+          <Property Name="id_pembelian_bahan" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_bahan" Type="Int32" Nullable="false" />
+          <Property Name="tanggal" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="jumlah_bahan" Type="Int32" />
+          <NavigationProperty Name="bahan" Relationship="bucynModel.FK_pembelian_bahan_bahan" FromRole="pembelian_bahan" ToRole="bahan" />
+        </EntityType>
+        <EntityType Name="penggunaan">
+          <Key>
+            <PropertyRef Name="id_penggunaan" />
+          </Key>
+          <Property Name="id_penggunaan" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tanggal" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="total_penggunaan" Type="Int32" />
+          <NavigationProperty Name="bahan_nasi" Relationship="bucynModel.FK_bahan_nasi_detail_penggunaan" FromRole="penggunaan" ToRole="bahan_nasi" />
+          <NavigationProperty Name="detail_penggunaan" Relationship="bucynModel.FK_bahan_nasi_penggunaan" FromRole="penggunaan" ToRole="detail_penggunaan" />
+        </EntityType>
+        <EntityType Name="penjualan">
+          <Key>
+            <PropertyRef Name="id_penjualan" />
+          </Key>
+          <Property Name="id_penjualan" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tanggal" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="total_penjualan" Type="Int32" />
+          <NavigationProperty Name="detail_penjualan" Relationship="bucynModel.FK_detail_penjualan_penjualan" FromRole="penjualan" ToRole="detail_penjualan" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_bahan_nasi_penggunaan1">
+          <End Type="bucynModel.bahan" Role="bahan" Multiplicity="1" />
+          <End Type="bucynModel.detail_penggunaan" Role="detail_penggunaan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bahan">
+              <PropertyRef Name="id_bahan" />
+            </Principal>
+            <Dependent Role="detail_penggunaan">
+              <PropertyRef Name="id_bahan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pembelian_bahan_bahan">
+          <End Type="bucynModel.bahan" Role="bahan" Multiplicity="1" />
+          <End Type="bucynModel.pembelian_bahan" Role="pembelian_bahan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bahan">
+              <PropertyRef Name="id_bahan" />
+            </Principal>
+            <Dependent Role="pembelian_bahan">
+              <PropertyRef Name="id_bahan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_bahan_nasi_detail_penggunaan">
+          <End Type="bucynModel.penggunaan" Role="penggunaan" Multiplicity="1" />
+          <End Type="bucynModel.bahan_nasi" Role="bahan_nasi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="penggunaan">
+              <PropertyRef Name="id_penggunaan" />
+            </Principal>
+            <Dependent Role="bahan_nasi">
+              <PropertyRef Name="id_penggunaan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_bahan_nasi_nasi">
+          <End Type="bucynModel.nasi" Role="nasi" Multiplicity="1" />
+          <End Type="bucynModel.bahan_nasi" Role="bahan_nasi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="nasi">
+              <PropertyRef Name="id_nasi" />
+            </Principal>
+            <Dependent Role="bahan_nasi">
+              <PropertyRef Name="id_nasi" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_bahan_nasi_penggunaan">
+          <End Type="bucynModel.penggunaan" Role="penggunaan" Multiplicity="1" />
+          <End Type="bucynModel.detail_penggunaan" Role="detail_penggunaan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="penggunaan">
+              <PropertyRef Name="id_penggunaan" />
+            </Principal>
+            <Dependent Role="detail_penggunaan">
+              <PropertyRef Name="id_penggunaan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_detail_penjualan_nasi">
+          <End Type="bucynModel.nasi" Role="nasi" Multiplicity="1" />
+          <End Type="bucynModel.detail_penjualan" Role="detail_penjualan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="nasi">
+              <PropertyRef Name="id_nasi" />
+            </Principal>
+            <Dependent Role="detail_penjualan">
+              <PropertyRef Name="id_nasi" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_detail_penjualan_penjualan">
+          <End Type="bucynModel.penjualan" Role="penjualan" Multiplicity="1" />
+          <End Type="bucynModel.detail_penjualan" Role="detail_penjualan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="penjualan">
+              <PropertyRef Name="id_penjualan" />
+            </Principal>
+            <Dependent Role="detail_penjualan">
+              <PropertyRef Name="id_penjualan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="bucynModelStoreContainer" CdmEntityContainer="bucynEntities">
+          <EntitySetMapping Name="bahans">
+            <EntityTypeMapping TypeName="bucynModel.bahan">
+              <MappingFragment StoreEntitySet="bahan">
+                <ScalarProperty Name="stock_bahan" ColumnName="stock_bahan" />
+                <ScalarProperty Name="harga_bahan" ColumnName="harga_bahan" />
+                <ScalarProperty Name="nama_bahan" ColumnName="nama_bahan" />
+                <ScalarProperty Name="id_bahan" ColumnName="id_bahan" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="bahan_nasi">
+            <EntityTypeMapping TypeName="bucynModel.bahan_nasi">
+              <MappingFragment StoreEntitySet="bahan_nasi">
+                <ScalarProperty Name="laba_rugi" ColumnName="laba_rugi" />
+                <ScalarProperty Name="jumlah_nasi" ColumnName="jumlah_nasi" />
+                <ScalarProperty Name="id_nasi" ColumnName="id_nasi" />
+                <ScalarProperty Name="id_penggunaan" ColumnName="id_penggunaan" />
+                <ScalarProperty Name="id_bahan_nasi" ColumnName="id_bahan_nasi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="detail_penggunaan">
+            <EntityTypeMapping TypeName="bucynModel.detail_penggunaan">
+              <MappingFragment StoreEntitySet="detail_penggunaan">
+                <ScalarProperty Name="total_bahan" ColumnName="total_bahan" />
+                <ScalarProperty Name="jumlah_bahan" ColumnName="jumlah_bahan" />
+                <ScalarProperty Name="id_bahan" ColumnName="id_bahan" />
+                <ScalarProperty Name="id_penggunaan" ColumnName="id_penggunaan" />
+                <ScalarProperty Name="id_detail" ColumnName="id_detail" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="detail_penjualan">
+            <EntityTypeMapping TypeName="bucynModel.detail_penjualan">
+              <MappingFragment StoreEntitySet="detail_penjualan">
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="jumlah_nasi" ColumnName="jumlah_nasi" />
+                <ScalarProperty Name="id_nasi" ColumnName="id_nasi" />
+                <ScalarProperty Name="id_penjualan" ColumnName="id_penjualan" />
+                <ScalarProperty Name="id_detail_pembelian" ColumnName="id_detail_pembelian" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="nasis">
+            <EntityTypeMapping TypeName="bucynModel.nasi">
+              <MappingFragment StoreEntitySet="nasi">
+                <ScalarProperty Name="stock_nasi" ColumnName="stock_nasi" />
+                <ScalarProperty Name="harga_nasi" ColumnName="harga_nasi" />
+                <ScalarProperty Name="nama_nasi" ColumnName="nama_nasi" />
+                <ScalarProperty Name="id_nasi" ColumnName="id_nasi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="pembelian_bahan">
+            <EntityTypeMapping TypeName="bucynModel.pembelian_bahan">
+              <MappingFragment StoreEntitySet="pembelian_bahan">
+                <ScalarProperty Name="jumlah_bahan" ColumnName="jumlah_bahan" />
+                <ScalarProperty Name="tanggal" ColumnName="tanggal" />
+                <ScalarProperty Name="id_bahan" ColumnName="id_bahan" />
+                <ScalarProperty Name="id_pembelian_bahan" ColumnName="id_pembelian_bahan" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="penggunaans">
+            <EntityTypeMapping TypeName="bucynModel.penggunaan">
+              <MappingFragment StoreEntitySet="penggunaan">
+                <ScalarProperty Name="total_penggunaan" ColumnName="total_penggunaan" />
+                <ScalarProperty Name="tanggal" ColumnName="tanggal" />
+                <ScalarProperty Name="id_penggunaan" ColumnName="id_penggunaan" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="penjualans">
+            <EntityTypeMapping TypeName="bucynModel.penjualan">
+              <MappingFragment StoreEntitySet="penjualan">
+                <ScalarProperty Name="total_penjualan" ColumnName="total_penjualan" />
+                <ScalarProperty Name="tanggal" ColumnName="tanggal" />
+                <ScalarProperty Name="id_penjualan" ColumnName="id_penjualan" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="bucynModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

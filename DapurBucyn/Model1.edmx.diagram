@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="2e8b499811dd4b8291f992bccf84004a" Name="Diagram1" ZoomLevel="86">
+        <EntityTypeShape EntityType="bucynModel.bahan" Width="1.5" PointX="3.75" PointY="9.875" />
+        <EntityTypeShape EntityType="bucynModel.bahan_nasi" Width="1.5" PointX="3" PointY="4.75" />
+        <EntityTypeShape EntityType="bucynModel.detail_penggunaan" Width="1.5" PointX="6" PointY="4.75" />
+        <EntityTypeShape EntityType="bucynModel.detail_penjualan" Width="1.5" PointX="3" PointY="0.75" />
+        <EntityTypeShape EntityType="bucynModel.nasi" Width="1.5" PointX="0.75" PointY="1.875" />
+        <EntityTypeShape EntityType="bucynModel.pembelian_bahan" Width="1.5" PointX="6" PointY="10" />
+        <EntityTypeShape EntityType="bucynModel.penggunaan" Width="1.5" PointX="0.75" PointY="5" />
+        <EntityTypeShape EntityType="bucynModel.penjualan" Width="1.5" PointX="0.75" PointY="8.375" />
+        <EntityTypeShape EntityType="bucynModel.sysdiagram" Width="1.5" PointX="8.75" PointY="2.875" />
+        <AssociationConnector Association="bucynModel.FK_bahan_nasi_penggunaan1" />
+        <AssociationConnector Association="bucynModel.FK_pembelian_bahan_bahan" />
+        <AssociationConnector Association="bucynModel.FK_bahan_nasi_detail_penggunaan" />
+        <AssociationConnector Association="bucynModel.FK_bahan_nasi_nasi" />
+        <AssociationConnector Association="bucynModel.FK_bahan_nasi_penggunaan" />
+        <AssociationConnector Association="bucynModel.FK_detail_penjualan_nasi" />
+        <AssociationConnector Association="bucynModel.FK_detail_penjualan_penjualan" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
